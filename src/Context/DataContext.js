@@ -99,7 +99,7 @@ export const DataContextProvider = ({ children }) => {
     if (storedSession) {
       setSession(JSON.parse(storedSession));
     } else {
-      console.log('no hay datos en local');
+      console.log('no hay datos en local');      
     }
   }, []);
 

@@ -121,6 +121,8 @@ export default function Products() {
     }
   }
 
+console.log((session?.oEmpresa)); 
+
   useEffect(() => {
     // Actualiza las opciones de búsqueda de empresas cuando cambia la lista de empresas en session
     if (session?.oEmpresa) {
@@ -162,26 +164,62 @@ export default function Products() {
     }
   }, []);
 
+  // useEffect(() => {
+  //   const filterResults = () => {
+  //     let results = product;
+  //     if (selectedFilter !== null) {
+  //       if (selectedFilter === 25) {
+  //         results = results.filter((product) => product.iCodeStatus === 27 || product.iCodeStatus === 28);
+  //       } else {
+  //         results = results?.filter((product) => product.iCodeStatus === selectedFilter);
+  //       }
+  //     }
+
+  //     if (searchQuery) {
+  //       results = results.filter((product) => product.sName.toLowerCase().includes(searchQuery.toLowerCase()));
+  //     }
+
+  //     setSearchResults(results);
+  //   };
+
+  //   filterResults();
+  // }, [searchQuery, selectedFilter, product, selectedFilterType]);
+
+
+  
   useEffect(() => {
     const filterResults = () => {
-      let results = product;
+      // Asegúrate de que `product` sea un array antes de empezar.
+      let results = Array.isArray(product) ? [...product] : [];
+  
+      // Aplicar filtro de estado si hay un filtro seleccionado.
       if (selectedFilter !== null) {
         if (selectedFilter === 25) {
-          results = results.filter((product) => product.iCodeStatus === 27 || product.iCodeStatus === 28);
+          results = results.filter(
+            (product) => product.iCodeStatus === 27 || product.iCodeStatus === 28
+          );
         } else {
-          results = results?.filter((product) => product.iCodeStatus === selectedFilter);
+          results = results.filter(
+            (product) => product.iCodeStatus === selectedFilter
+          );
         }
       }
-
-      if (searchQuery) {
-        results = results.filter((product) => product.sName.toLowerCase().includes(searchQuery.toLowerCase()));
+  
+      // Aplicar búsqueda por texto si `searchQuery` no está vacío.
+      if (searchQuery && searchQuery.trim() !== '') {
+        results = results.filter((product) =>
+          product.sName.toLowerCase().includes(searchQuery.toLowerCase().trim())
+        );
       }
-
+  
+      // Actualiza los resultados en el estado.
       setSearchResults(results);
     };
-
-    filterResults();
+  
+    filterResults(); // Ejecutar la función de filtrado.
+  
   }, [searchQuery, selectedFilter, product, selectedFilterType]);
+  
 
   const handleInputChange = (event) => {
     setSearchQuery(event.target.value);

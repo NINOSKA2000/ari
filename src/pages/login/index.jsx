@@ -79,8 +79,7 @@ export default function Login() {
       <nav className="navRegister">
         <div className="navRegister_head">
           <div className="container-lang">
-            {' '}
-            <Lang />{' '}
+            <Lang />
           </div>
           <div className="navRegister_logo">
             <Image src={logo} width={100} alt="imgRegister" />
@@ -105,7 +104,7 @@ export default function Login() {
           enableReinitialize
         >
           {({ isValid, isSubmitting, status }) => (
-            <Form className="form-container">
+            <Form className="form-container" test-id="form-login">
               <div className="input-box">
                 <Field type="email" name="corporateEmail" id="corporateEmail" placeholder=" " disabled={!isEmailFieldEnabled || isSubmitting} />
                 <label htmlFor="corporateEmail">{t['Company email']}</label>
@@ -121,12 +120,12 @@ export default function Login() {
                 <ErrorMessage className="errorMessage" name="password" component="span" />
               </div>
 
-              <button type="submit" disabled={isSubmitting || !isEmailFieldEnabled} className={isValid ? 'btn_primary' : 'btn_primary disabled'} onClick={() => setEmailFieldEnabled(true)}>
+              <button type="submit" test-id="button-login" disabled={isSubmitting || !isEmailFieldEnabled} className={isValid ? 'btn_primary' : 'btn_primary disabled'} onClick={() => setEmailFieldEnabled(true)}>
                 {isSubmitting ? `${t['Log in']}${'....'}` : t['Log in']}
               </button>
 
               <div className="contentError">
-                <div className="errorMessage">{status}</div>
+                <div className="errorMessage" >{status}</div>
               </div>
             </Form>
           )}

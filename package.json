@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier -w",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "cypress:open": "cypress open",
+    "test:e2e":"cypress run"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -28,7 +30,6 @@
     "crypto-js": "^4.1.1",
     "date-fns": "^2.25.0",
     "dayjs": "^1.11.9",
-    "eslint": "8.41.0",
     "eslint-config-next": "13.4.4",
     "exceljs": "^4.4.0",
     "formik": "^2.4.2",
@@ -64,6 +65,8 @@
     "yup": "^1.2.0"
   },
   "devDependencies": {
+    "cypress": "^13.17.0",
+    "eslint": "^9.18.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.8.8",
