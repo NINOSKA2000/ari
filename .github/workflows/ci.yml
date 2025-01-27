@@ -10,37 +10,40 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04 # Puedes usar 'ubuntu-latest' o especificar una versión específica
 
     steps:
-      # Configurar el repositorio
+      # 1. Checkout del repositorio
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Configurar Node.js
+      # 2. Configurar Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20 # Usa la versión que utiliza tu proyecto
+          node-version: 20.11.1 # Versión de Node.js que usas localmente
+          cache: 'npm' # Habilita cache para mejorar tiempos de ejecución
 
-      # Instalar dependencias
+      # 3. Instalar dependencias
       - name: Install dependencies
         run: npm install
 
-      # Construir la aplicación
+      # 4. Construir la aplicación
       - name: Build application
         run: npm run build
 
-      # Ejecutar las pruebas de Cypress
+      # 5. Iniciar la aplicación (si es necesario para Cypress)
+      - name: Start application
+        run: npm run start &
+        env:
+          NODE_ENV: test
+
+      # 6. Esperar que la aplicación esté lista antes de ejecutar Cypress
+      - name: Wait for application to start
+        run: npx wait-on http://localhost:3000
+
+      # 7. Ejecutar las pruebas de Cypress
       - name: Run Cypress tests
         run: npm run cypress:run
         env:
           CYPRESS_BASE_URL: http://localhost:3000
-        continue-on-error: false
-
-      # Subir resultados de Cypress (opcional)
-      - name: Upload Cypress results
-        uses: actions/upload-artifact@v3
-        with:
-          name: cypress-results
-          path: cypress/videos/
