@@ -1,4 +1,4 @@
-name: CI Workflow (Optimization Branch)
+name: CI Workflow (optimization Branch)
 
 on:
   push:
@@ -10,40 +10,48 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-22.04 # Puedes usar 'ubuntu-latest' o especificar una versión específica
+    runs-on: ubuntu-22.04
 
     steps:
-      # 1. Checkout del repositorio
+      # Configurar el repositorio
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Configurar Node.js
+      # Configurar Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20.11.1 # Versión de Node.js que usas localmente
-          cache: 'npm' # Habilita cache para mejorar tiempos de ejecución
+          node-version: 20.11.1
+          cache: 'npm'
 
-      # 3. Instalar dependencias
+      # Instalar herramientas necesarias para dependencias nativas
+      - name: Install build tools
+        run: sudo apt-get update && sudo apt-get install -y build-essential python3
+
+      # Forzar registro de npm (opcional)
+      - name: Set npm registry
+        run: npm config set registry https://registry.npmjs.org/
+
+      # Instalar dependencias
       - name: Install dependencies
-        run: npm install
+        run: npm install --no-cache
 
-      # 4. Construir la aplicación
+      # Construir la aplicación
       - name: Build application
         run: npm run build
 
-      # 5. Iniciar la aplicación (si es necesario para Cypress)
+      # Iniciar la aplicación para pruebas
       - name: Start application
         run: npm run start &
         env:
           NODE_ENV: test
 
-      # 6. Esperar que la aplicación esté lista antes de ejecutar Cypress
+      # Esperar a que la aplicación esté lista
       - name: Wait for application to start
         run: npx wait-on http://localhost:3000
 
-      # 7. Ejecutar las pruebas de Cypress
+      # Ejecutar las pruebas de Cypress
       - name: Run Cypress tests
-        run: npm run cypress:run
+        run: npm run test:e2e
         env:
           CYPRESS_BASE_URL: http://localhost:3000
