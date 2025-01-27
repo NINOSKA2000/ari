@@ -1,0 +1,46 @@
+name: CI Workflow (Optimization Branch)
+
+on:
+  push:
+    branches:
+      - optimization
+  pull_request:
+    branches:
+      - optimization
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Configurar el repositorio
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Configurar Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20 # Usa la versión que utiliza tu proyecto
+
+      # Instalar dependencias
+      - name: Install dependencies
+        run: npm install
+
+      # Construir la aplicación
+      - name: Build application
+        run: npm run build
+
+      # Ejecutar las pruebas de Cypress
+      - name: Run Cypress tests
+        run: npm run cypress:run
+        env:
+          CYPRESS_BASE_URL: http://localhost:3000
+        continue-on-error: false
+
+      # Subir resultados de Cypress (opcional)
+      - name: Upload Cypress results
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-results
+          path: cypress/videos/

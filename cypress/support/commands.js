@@ -49,9 +49,7 @@ Cypress.Commands.add('login', (email, password, expectedUserData) => {
 
   });
   
-  
-
-  Cypress.Commands.add('searchAndVerify', (textSearch) => {
+Cypress.Commands.add('searchAndVerify', (textSearch) => {
     // Verifica que el campo de búsqueda esté visible
     cy.get('.searchButton input[type="text"]')
       .should('exist')

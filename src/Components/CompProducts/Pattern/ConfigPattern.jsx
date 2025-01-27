@@ -182,7 +182,6 @@ export default function ConfigPattern() {
 
     try {
       const response = await fetchConTokenPost('BPasS/?Accion=EliminarPadrones', body, token);
-      console.error('res', response);
       if (response.oAuditResponse?.iCode === 1) {
         setModalToken(false);
         setGet(!get);
@@ -198,7 +197,7 @@ export default function ConfigPattern() {
   };
 
   return (
-    <div className="pattern-configuration">
+    <div className="pattern-configuration" test-id="pattern-configuration" >
       <div className="Tabsumenu">
         <div className="Tabsumenu-header ">
           <button className={` ${activeTab === 0 ? 'activeST' : ''} ${completeEmails ? 'completeST' : ''}`} onClick={() => handleTabClick(0)}>
@@ -206,7 +205,7 @@ export default function ConfigPattern() {
             <h4> {t['Status and emails']} </h4>
           </button>
 
-          <button style={{ visibility: completeEmails ? 'visible' : 'hidden' }} className={` ${activeTab === 1 ? 'activeST' : ''} ${completePadrones ? 'completeST' : ''}`} onClick={() => handleTabClick(1)}>
+          <button  style={{ visibility: completeEmails ? 'visible' : 'hidden' }} className={` ${activeTab === 1 ? 'activeST' : ''} ${completePadrones ? 'completeST' : ''}`} onClick={() => handleTabClick(1)}>
             <ImageSvg name="Check" />
             <h4> {t.Pattern} </h4>
           </button>
@@ -215,10 +214,7 @@ export default function ConfigPattern() {
         <div className="Tabsumenu-content">
           {activeTab === 0 && (
             <div className="container-status">
-             
-
               <EmailsForm dataEmails={dataPadrones?.oCorreo} setUpdateEmails={setUpdateEmails} sProduct={dataCardProduct?.sProd} get={get} setGet={setGet} />
-
               <div className="box-buttons">
                 <button type="button" className={`btn_secundary small ${completeEmails ? ' ' : 'disabled'}`} onClick={() => handleTabClick(1)} disabled={!completeEmails}>
                   {t.Next}
@@ -255,9 +251,6 @@ export default function ConfigPattern() {
                         <tr>
                           <th>{t.Pattern} </th>
                           <th> {t.Country}</th>
-                          {/*
-                          <th>{t.State} </th> */}
-
                           <th>{t.Actions} </th>
                         </tr>
                       </thead>
@@ -268,11 +261,6 @@ export default function ConfigPattern() {
                             <tr key={row.id_principal}>
                               <td>{row.desc_documento}</td>
                               <td>{row.id_pais == 1 ? 'Perú' : row.id_pais} </td>
-
-                              {/* <td>
-                              <span className={row.estado == '23' ? 'status-active' : 'status-disabled'}>{row.estado == '23' ? 'Active' : 'Disabled'}</span>
-                            </td> */}
-
                               <td className="box-actions">
                                 <button
                                   className="btn_crud delete"

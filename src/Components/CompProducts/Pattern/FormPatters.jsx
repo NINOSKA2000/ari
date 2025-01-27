@@ -55,6 +55,9 @@ const FormPatters = ({ onAgregar, dataPadrones, setShowForm }) => {
   //   setValueState(event.target.value)
   // }
 
+  console.log(dataPadrones?.oDocumento);
+  
+
   return (
     <ModalForm
       close={() => {
@@ -103,7 +106,7 @@ const FormPatters = ({ onAgregar, dataPadrones, setShowForm }) => {
                         }}
                       >
                         {dataPadrones?.oPais.map((country) => (
-                          <MenuItem key={country.id_pais} value={country.id_pais}>
+                          <MenuItem key={country.id_pais} value={country.id_pais} >
                             {country.descripcion_pais}
                           </MenuItem>
                         ))}
@@ -112,9 +115,9 @@ const FormPatters = ({ onAgregar, dataPadrones, setShowForm }) => {
                     </FormControl>
 
                     <FormControl sx={{ m: 1, minWidth: 180 }}>
-                      <InputLabel id="fuente">{t.Pattern}</InputLabel>
+                      <InputLabel id="input-patterns">{t.Pattern}</InputLabel>
                       <Select
-                        labelId="fuente"
+                        labelId="option-patterns"
                         value={selectedPattern}
                         IconComponent={IconArrow}
                         onChange={(values) => {
@@ -123,7 +126,7 @@ const FormPatters = ({ onAgregar, dataPadrones, setShowForm }) => {
                         }}
                       >
                         {dataPadrones?.oDocumento.map((option) => (
-                          <MenuItem key={option.id_documento} value={option.id_documento}>
+                          <MenuItem key={option.id_documento} value={option.id_documento} test-id={option.nombre}>
                             {option.nombre}
                           </MenuItem>
                         ))}
@@ -135,43 +138,6 @@ const FormPatters = ({ onAgregar, dataPadrones, setShowForm }) => {
                 </div>
               </div>
 
-              {/* <div className='content'>
-                <div className='subtitle'>
-                  <h5 className='sub'> 2. {t.State} </h5>
-                  <p className='description'>{t['Enable or disable exchange rate']}</p>
-                </div>
-
-                <div className='content'>
-
-                  <FormControl sx={{ m: 1 }}>
-
-                    <RadioGroup
-                      row
-                      aria-labelledby='demo-form-control-label-placement'
-                      name='state'
-                      value={valueState}
-                      onChange={(values) => { handleStateChange(values); setFieldValue('state', values.target.value) }}
-                    >
-
-                      <FormControlLabel
-                        value='Active'
-                        control={<Radio />}
-                        label={t.Active}
-                      />
-
-                      <FormControlLabel
-                        value='Disabled'
-                        control={<Radio />}
-                        label={t.Disabled}
-                      />
-
-                    </RadioGroup>
-
-                  </FormControl>
-
-                </div>
-
-              </div> */}
 
               {registerDuplicate && (
                 <div className="error ">

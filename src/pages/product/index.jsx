@@ -121,8 +121,6 @@ export default function Products() {
     }
   }
 
-console.log((session?.oEmpresa)); 
-
   useEffect(() => {
     // Actualiza las opciones de búsqueda de empresas cuando cambia la lista de empresas en session
     if (session?.oEmpresa) {
@@ -163,28 +161,6 @@ console.log((session?.oEmpresa));
       setEmpresa(firstEmpresa);
     }
   }, []);
-
-  // useEffect(() => {
-  //   const filterResults = () => {
-  //     let results = product;
-  //     if (selectedFilter !== null) {
-  //       if (selectedFilter === 25) {
-  //         results = results.filter((product) => product.iCodeStatus === 27 || product.iCodeStatus === 28);
-  //       } else {
-  //         results = results?.filter((product) => product.iCodeStatus === selectedFilter);
-  //       }
-  //     }
-
-  //     if (searchQuery) {
-  //       results = results.filter((product) => product.sName.toLowerCase().includes(searchQuery.toLowerCase()));
-  //     }
-
-  //     setSearchResults(results);
-  //   };
-
-  //   filterResults();
-  // }, [searchQuery, selectedFilter, product, selectedFilterType]);
-
 
   
   useEffect(() => {
@@ -506,7 +482,7 @@ console.log((session?.oEmpresa));
           <ul>
             {searchResults.length > 0 &&
               searchResults.map((product) => (
-                <li key={product.iId} className={`card ${product.sCodeClasificacion === String('CLA_01') ? 'financy' : product.sCodeClasificacion === String('CLA_02') ? 'tecnology' : product.sCodeClasificacion === String('CLA_03') ? 'human' : ''}`}>
+                <li key={product.iId} test-id={product.sName} className={`card ${product.sCodeClasificacion === String('CLA_01') ? 'financy' : product.sCodeClasificacion === String('CLA_02') ? 'tecnology' : product.sCodeClasificacion === String('CLA_03') ? 'human' : ''}`}>
                   <div className="card-type">
                     <div className="type_icon">
                       <ImageSvg name={imgProduct(product.iId)} />
