@@ -34,7 +34,7 @@ jobs:
 
       # Instalar dependencias
       - name: Install dependencies
-        run: npm install --no-cache
+      run: npm install --legacy-peer-deps
 
       # Construir la aplicación
       - name: Build application
